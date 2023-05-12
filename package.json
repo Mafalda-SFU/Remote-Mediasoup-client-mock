@@ -1,0 +1,24 @@
+{
+  "name": "@mafalda-sfu/remote-mediasoup-client-mock",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "exports": "./index.js",
+  "scripts": {
+    "docs": "cp README.md docs/ && jsdoc2md *.js > docs/API.md",
+    "predocs": "mkdir -p docs/",
+    "prepare": "husky install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jesús Leganés-Combarro 'piranna' (https://piranna.github.io)",
+  "license": "ISC",
+  "dependencies": {
+    "mediasoup": "^3.11.24"
+  },
+  "devDependencies": {
+    "@mafalda-sfu/eslint-config": "^0.2.2",
+    "eslint": "^8.40.0",
+    "husky": "^8.0.3",
+    "jsdoc-to-markdown": "^8.0.0"
+  }}
