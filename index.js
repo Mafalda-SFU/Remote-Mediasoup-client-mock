@@ -35,7 +35,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
 
 
   //
-  // Public API
+  // Remote Mediasoup common interface
   //
 
   /**
@@ -51,11 +51,6 @@ export default class RemoteMediasoupClientMock extends EventEmitter
     return this.#open ? mediasoup : undefined
   }
 
-
-  //
-  // ROPE client API
-  //
-
   /**
    * Get the current `readyState` of the client.
    *
@@ -68,6 +63,11 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   {
     return this.#open ? 4 : 3
   }
+
+
+  //
+  // Remote Mediasoup client API
+  //
 
   /**
    * Close the client.
