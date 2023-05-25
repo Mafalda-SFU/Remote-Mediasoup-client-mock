@@ -1,3 +1,4 @@
+import {ok} from 'node:assert/strict'
 import EventEmitter from 'node:events'
 
 import mediasoup from 'mediasoup'
@@ -26,6 +27,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   {
     if(url && typeof url !== 'string') ({WebSocket, url} = url)
 
+    // eslint-disable-next-line no-console
     if(WebSocket) console.debug('Websocket class not used in mock')
 
     super()

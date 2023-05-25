@@ -7,8 +7,10 @@
   "exports": "./index.js",
   "scripts": {
     "docs": "cp README.md docs/ && jsdoc2md *.js > docs/API.md",
+    "lint": "eslint .",
     "predocs": "mkdir -p docs/",
     "prepare": "husky install",
+    "pretest": "npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jesús Leganés-Combarro 'piranna' (https://piranna.github.io)",
