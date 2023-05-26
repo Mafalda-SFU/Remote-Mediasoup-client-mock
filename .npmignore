@@ -1,0 +1,5 @@
+.github/
+*.tgz
+coverage*
+.eslintrc
+test.js

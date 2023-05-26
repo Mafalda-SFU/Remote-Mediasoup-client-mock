@@ -15,7 +15,10 @@ jobs:
       - uses: actions/setup-node@v3
 
       - run: npm ci --verbose
-      - run: npm test -- --coverageReporters=json-summary
+      - run: |
+          npm test -- \
+            --test-reporter=@mafalda-sfu/test-reporter-json \
+            --test-reporter-destination=coverage.json
       - run: npm run docs
 
       - uses: cpina/github-action-push-to-another-repository@v1.5.1
@@ -31,7 +34,7 @@ jobs:
 
       - name: "Combine"
         run: |
-          export TOTAL=$(cat coverage/coverage-summary.json | jq .total.statements.pct)
+          export TOTAL=$(cat coverage.json | jq .summary.totals.coveredLinePercent)
           echo "total=$TOTAL" >> $GITHUB_ENV
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
       - name: Dynamic Badges
