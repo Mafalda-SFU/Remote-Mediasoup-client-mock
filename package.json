@@ -15,12 +15,11 @@
   "author": "Jesús Leganés-Combarro 'piranna' (https://piranna.github.io)",
   "license": "ISC",
   "dependencies": {
-    "mediasoup": "^3.11.26"
+    "mediasoup": "^3.12.8"
   },
   "devDependencies": {
-    "@mafalda-sfu/eslint-config": "^0.2.2",
-    "@mafalda-sfu/test-reporter-json": "^0.0.0",
-    "eslint": "^8.41.0",
+    "@mafalda-sfu/eslint-config": "^0.3.0",
+    "eslint": "^8.45.0",
     "husky": "^8.0.3",
     "jsdoc-to-markdown": "^8.0.0"
   }
