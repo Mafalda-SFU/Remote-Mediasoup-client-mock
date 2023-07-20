@@ -16,7 +16,10 @@ jobs:
         with:
           node-version: '>=20.1.0'
 
+      # Install dependencies
       - run: npm ci --verbose
+      - run: npm install --no-save @mafalda-sfu/test-reporter-json
+
       - run: |
           npm test -- \
             --test-reporter=@mafalda-sfu/test-reporter-json \
