@@ -50,7 +50,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   get mediasoup()
   {
-    return this.#open ? mediasoup : undefined
+    return this.#connected ? mediasoup : undefined
   }
 
   /**
@@ -63,7 +63,11 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   get readyState()
   {
-    return this.#open ? 4 : 3
+    return this.#connected
+      ? 4
+      : this.#closed
+        ? 3
+        : 1
   }
 
 
@@ -80,13 +84,16 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   close()
   {
-    this.#open = false
+    if(this.#closed) return
+
+    this.#closed = true
+    this.#connected = false
 
     // Notify client is closed
     this.emit('close')
 
-    setImmediate(this.#onDisconnected)
-    setImmediate(this.#onWebsocketClose)
+    // We don't emit the 'disconnected' and `websocketClose` events because it's
+    // us who are closing the client, not the server
   }
 
   /**
@@ -100,7 +107,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   open(url)
   {
-    ok(!this.#open, `${this.constructor.name} is already open(ing)`)
+    ok(this.#closed, `${this.constructor.name} is already open(ing)`)
 
     // If `url` argument is not provided, allow to reopen the client to the same
     // previous URL by default
@@ -112,7 +119,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
     setImmediate(this.#onWebsocketOpen)
     setImmediate(this.#onConnected)
 
-    this.#open = true
+    this.#closed = false
     this.#url = url
 
     return this
@@ -123,12 +130,16 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   // Private API
   //
 
-  #open
+  #closed = true
+  #connected = false
   #url
 
-  #onConnected = this.emit.bind(this, 'connected')
-  #onDisconnected = this.emit.bind(this, 'disconnected')
+  #onConnected = () =>
+  {
+    this.#connected = true
+    this.emit('connected')
+  }
+
   #onOpen = this.emit.bind(this, 'open')
-  #onWebsocketClose = this.emit.bind(this, 'websocketClose')
   #onWebsocketOpen = this.emit.bind(this, 'websocketOpen')
 }
