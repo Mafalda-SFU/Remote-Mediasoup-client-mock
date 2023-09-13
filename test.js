@@ -12,7 +12,9 @@ test('layout', function()
 })
 
 
-const remoteMediasoupClientMock = new RemoteMediasoupClientMock('ws://example.com')
+const remoteMediasoupClientMock = new RemoteMediasoupClientMock(
+  'ws://example.com'
+)
 
 await once(remoteMediasoupClientMock, 'connected')
 

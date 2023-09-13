@@ -63,11 +63,9 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   get readyState()
   {
-    return this.#connected
-      ? 4
-      : this.#closed
-        ? 3
-        : 1
+    if(this.#connected) return 4
+
+    return this.#closed ? 3 : 1
   }
 
 
