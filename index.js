@@ -50,6 +50,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   /**
    * @summary Creates an instance of {@link RemoteMediasoupClientMock}.
    *
+   * @constructor
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
    * @param {string|object} [url] URL of the
@@ -79,12 +80,12 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   //
 
   /**
-   * @summary Get a reference to the `mediasoup` package exported object.
-   *
    * This object is API compatible with the
    * [Mediasoup API](https://mediasoup.org/documentation/v3/mediasoup/api/)
    * provided by the
    * [`Mediasoup` package](https://www.npmjs.com/package/mediasoup).
+   *
+   * @summary Get a reference to the `mediasoup` package exported object.
    *
    * @see {@link https://mediasoup.org/documentation/v3/mediasoup/api/}
    *
@@ -99,8 +100,6 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   }
 
   /**
-   * @summary Get the current `readyState` of the client.
-   *
    * In addition of the states defined for the WebSocket connection
    * [readyState]{@link
    * https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState#value}
@@ -109,6 +108,8 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    * [Remote Mediasoup server](https://mafalda.io/Remote-Mediasoup-server/)
    * payload with its internal state has been received and sync'ed, and so the
    * `Remote Mediasoup` connection has been fully established.
+   *
+   * @summary Get the current `readyState` of the client.
    *
    * @see
    * {@link
@@ -132,9 +133,9 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   //
 
   /**
-   * @summary Close the client.
-   *
    * If it's already closed, this method does nothing
+   *
+   * @summary Close the client.
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
@@ -155,9 +156,9 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   }
 
   /**
-   * @summary Open the client to the given URL.
-   *
    * If it's already open, it will throw an exception
+   *
+   * @summary Open the client to the given URL.
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
