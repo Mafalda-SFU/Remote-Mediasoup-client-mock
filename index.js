@@ -3,8 +3,41 @@ import EventEmitter from 'node:events'
 
 import mediasoup from 'mediasoup'
 
+
 /**
- * Connection mock class
+ * @see
+ * {@link
+ * https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState#value}
+ */
+const OPEN = 1
+/**
+ * @see
+ * {@link
+ * https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState#value}
+ */
+const CLOSED = 3
+/**
+ * Additional state to the WebSocket connection
+ * [readyState]{@link
+ * https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState#value}
+ * property to indicate that the
+ * [Remote Mediasoup server]{@link https://mafalda.io/Remote-Mediasoup-server/}
+ * payload with its internal state has been received and sync'ed, and so the
+ * `Remote Mediasoup` connection has been fully established.
+ *
+ * @constant
+ * @type {number}
+ * @default
+ */
+const CONNECTED = 4
+
+
+/**
+ * @summary Remote Mediasoup client mock class
+ *
+ * @see
+ * {@link https://mafalda.io/Remote-Mediasoup-client/API#RemoteMediasoupClient
+ * Remote Mediasoup client}
  *
  * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
  * @date 30/04/2023
@@ -15,12 +48,17 @@ import mediasoup from 'mediasoup'
 export default class RemoteMediasoupClientMock extends EventEmitter
 {
   /**
-   * Creates an instance of RemoteMediasoupClientMock.
+   * @summary Creates an instance of {@link RemoteMediasoupClientMock}.
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
-   * @param {string|object} [url]
-   * @param {object} [WebSocket]
+   * @param {string|object} [url] URL of the
+   * [Remote Mediasoup server](https://mafalda.io/Remote-Mediasoup-server/). If
+   * it's not provided, the {@link RemoteMediasoupClientMock} object will remain
+   * in closed state.
+   * @param {object} [WebSocket] WebSocket class to be used to create the
+   * connections with the
+   * [Remote Mediasoup server](https://mafalda.io/Remote-Mediasoup-server/)
    * @memberof RemoteMediasoupClientMock
    */
   constructor(url, WebSocket)
@@ -41,7 +79,14 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   //
 
   /**
-   * Get a reference to the `mediasoup` package exported object.
+   * @summary Get a reference to the `mediasoup` package exported object.
+   *
+   * This object is API compatible with the
+   * [Mediasoup API](https://mediasoup.org/documentation/v3/mediasoup/api/)
+   * provided by the
+   * [`Mediasoup` package](https://www.npmjs.com/package/mediasoup).
+   *
+   * @see {@link https://mediasoup.org/documentation/v3/mediasoup/api/}
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
@@ -54,7 +99,20 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   }
 
   /**
-   * Get the current `readyState` of the client.
+   * @summary Get the current `readyState` of the client.
+   *
+   * In addition of the states defined for the WebSocket connection
+   * [readyState]{@link
+   * https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState#value}
+   * property, this property can have a ['connected' state]{@link CONNECTED}
+   * to indicate that the
+   * [Remote Mediasoup server](https://mafalda.io/Remote-Mediasoup-server/)
+   * payload with its internal state has been received and sync'ed, and so the
+   * `Remote Mediasoup` connection has been fully established.
+   *
+   * @see
+   * {@link
+   * https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState}
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
@@ -63,9 +121,9 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   get readyState()
   {
-    if(this.#connected) return 4
+    if(this.#connected) return CONNECTED
 
-    return this.#closed ? 3 : 1
+    return this.#closed ? CLOSED : OPEN
   }
 
 
@@ -74,7 +132,9 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   //
 
   /**
-   * Close the client.
+   * @summary Close the client.
+   *
+   * If it's already closed, this method does nothing
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
@@ -95,11 +155,16 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   }
 
   /**
-   * Open the client to the given URL.
+   * @summary Open the client to the given URL.
+   *
+   * If it's already open, it will throw an exception
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    * @date 30/04/2023
-   * @param {string} [url]
+   * @param {string} [url] URL of the
+   * [Remote Mediasoup server](https://mafalda.io/Remote-Mediasoup-server/). If
+   * not provided, it will re-open the connection to the last provided URL, and
+   * if was not provided, it will throw an exception
    * @return {RemoteMediasoupClientMock}
    * @memberof RemoteMediasoupClientMock
    */
