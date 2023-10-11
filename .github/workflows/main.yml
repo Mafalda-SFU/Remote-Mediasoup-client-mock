@@ -56,6 +56,7 @@ jobs:
           valColorRange: ${{ env.codeCoverage }}
 
       # Docs coverage
+      - run: npm run docs:coverage
       - name: Docs coverage
         run: |
           export DOCS_COVERAGE=$(cat doc-coverage/docCoverageReport.json | jq .jsdocCoverage.coveragePercent)
