@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@mafalda-sfu/doc-coverage": "github:Mafalda-SFU/doc-coverage",
-    "@mafalda-sfu/eslint-config": "^0.6.3",
+    "@mafalda-sfu/eslint-config": "^0.6.4",
     "@mafalda-sfu/eslint-config-jest": "^0.0.1",
     "@mafalda-sfu/mediasoup-node-tests": "^3.12.11",
     "eslint": "^8.51.0",

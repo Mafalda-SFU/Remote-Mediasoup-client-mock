@@ -1,4 +1,4 @@
-import {once} from 'node:events';
+import {once} from 'node:events'
 
 import mediasoupNodeTests from '@mafalda-sfu/mediasoup-node-tests'
 import RemoteMediasoupClientMock from '@mafalda-sfu/remote-mediasoup-client-mock'
