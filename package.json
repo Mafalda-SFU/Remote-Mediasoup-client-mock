@@ -1,9 +1,13 @@
 {
   "name": "@mafalda-sfu/remote-mediasoup-client-mock",
   "version": "3.12.12",
-  "description": "",
+  "description": "Mock of `Remote Mediasoup client`",
   "type": "module",
+  "main": "index.js",
   "exports": "./index.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "docs": "cp README.md docs/ && jsdoc2md *.js > docs/API.md",
     "docs:coverage": "doc-coverage .",
@@ -13,8 +17,25 @@
     "pretest": "npm run lint",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mafalda-SFU/Remote-Mediasoup-client-mock.git"
+  },
+  "keywords": [
+    "Mafalda",
+    "SFU",
+    "mock",
+    "WebSocket",
+    "client",
+    "Remote",
+    "Mediasoup"
+  ],
   "author": "Jesús Leganés-Combarro 'piranna' (https://piranna.github.io)",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mafalda-SFU/Remote-Mediasoup-client-mock/issues"
+  },
+  "homepage": "https://mafalda.io/Remote-Mediasoup-client-mock",
   "dependencies": {
     "mediasoup": "^3.12.12"
   },
