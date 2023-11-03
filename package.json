@@ -37,14 +37,15 @@
   },
   "homepage": "https://mafalda.io/Remote-Mediasoup-client-mock",
   "dependencies": {
-    "mediasoup": "^3.12.12"
+    "mediasoup": "^3.12.12",
+    "pidusage": "^3.0.2"
   },
   "devDependencies": {
     "@mafalda-sfu/doc-coverage": "github:Mafalda-SFU/doc-coverage",
     "@mafalda-sfu/eslint-config": "^0.6.4",
     "@mafalda-sfu/eslint-config-jest": "^0.0.1",
     "@mafalda-sfu/mediasoup-node-tests": "^3.12.11",
-    "eslint": "^8.51.0",
+    "eslint": "^8.52.0",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "jsdoc-to-markdown": "^8.0.0"
