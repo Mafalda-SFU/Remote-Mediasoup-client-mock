@@ -20,7 +20,7 @@ test('layout', function()
 
 test('lifecycle', async function()
 {
-  expect.assertions(8)
+  expect.assertions(11)
 
   remoteMediasoupClientMock = new RemoteMediasoupClientMock({WebSocket: {}})
 
@@ -36,6 +36,12 @@ test('lifecycle', async function()
 
   expect(remoteMediasoupClientMock.mediasoup).toBeDefined()
   expect(remoteMediasoupClientMock.readyState).toBe(4)
+
+  const stats = await remoteMediasoupClientMock.getStats()
+
+  expect(stats.os).toBeDefined()
+  expect(stats.pidusages).toBeUndefined()
+  expect(stats.process).toBeDefined()
 
   remoteMediasoupClientMock.close()
 

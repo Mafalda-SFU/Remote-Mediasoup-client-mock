@@ -1,7 +1,11 @@
 import {ok} from 'node:assert/strict'
 import EventEmitter from 'node:events'
+import {
+  availableParallelism, cpus, freemem, loadavg, totalmem, uptime
+} from 'os'
 
 import mediasoup from 'mediasoup'
+import pidusage from 'pidusage'
 
 
 /**
@@ -81,6 +85,8 @@ export default class RemoteMediasoupClientMock extends EventEmitter
 
     super()
 
+    mediasoup.observer.on('newworker', this.#onNewWorker)
+
     if(url) this.open(url)
   }
 
@@ -139,6 +145,36 @@ export default class RemoteMediasoupClientMock extends EventEmitter
     if(this.#connected) return CONNECTED
 
     return this.#closed ? CLOSED : OPEN
+  }
+
+
+  async getStats()
+  {
+    ok(this.#connected, 'Remote Mediasoup client is not connected')
+
+    const pidusages = this.#workersPids?.length
+      ? await pidusage(this.#workersPids)
+      : undefined
+
+    return {
+      os: {
+        availableParallelism: availableParallelism(),
+        cpus: cpus(),
+        freemem: freemem(),
+        loadavg: loadavg(),
+        totalmem: totalmem(),
+        uptime: uptime()
+      },
+      pidusages,
+      process: {
+        constrainedMemory: process.constrainedMemory(),
+        cpuUsage: process.cpuUsage(),
+        hrtime: process.hrtime.bigint(),
+        memoryUsage: process.memoryUsage(),
+        resourceUsage: process.resourceUsage(),
+        uptime: process.uptime()
+      }
+    }
   }
 
 
@@ -217,6 +253,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   #closed = true
   #connected = false
   #url
+  #workersPids = []
 
   #onConnected = () =>
   {
@@ -225,5 +262,24 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   }
 
   #onOpen = this.emit.bind(this, 'open')
+
+  #onNewWorker = worker =>
+  {
+    const {observer, pid} = worker
+
+    const workersPids = this.#workersPids
+
+    if(workersPids.includes(pid)) return
+
+    workersPids.push(pid)
+
+    observer.once('close', function()
+    {
+      const index = workersPids.indexOf(pid)
+
+      if(index !== -1) workersPids.splice(index, 1)
+    })
+  }
+
   #onWebsocketOpen = this.emit.bind(this, 'websocketOpen')
 }
