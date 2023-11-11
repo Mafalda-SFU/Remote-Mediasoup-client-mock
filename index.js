@@ -143,7 +143,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   }
 
 
-  async getStats()
+  getStats = async () =>
   {
     ok(this.#mediasoupGetStats, 'Remote Mediasoup client is not connected')
 
