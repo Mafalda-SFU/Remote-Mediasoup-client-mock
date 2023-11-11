@@ -1,6 +1,6 @@
 {
   "name": "@mafalda-sfu/remote-mediasoup-client-mock",
-  "version": "3.12.12",
+  "version": "3.12.16",
   "description": "Mock of `Remote Mediasoup client`",
   "type": "module",
   "main": "index.js",
