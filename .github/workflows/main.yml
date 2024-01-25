@@ -14,10 +14,14 @@ jobs:
       # main
       code-coverage_gistID: ${{ vars.CODE_COVERAGE_GISTID }}
 
+      # schedule / Update
+      dependencies-update-latest: "@mafalda-sfu/* mediasoup"
+
       # schedule / Docs
       destination-repository-name: Mafalda-SFU.github.io
       docs-coverage_gistID: ${{ vars.DOCS_COVERAGE_GISTID }}
       user-email: bot@mafalda.io
+      user-name: Mafalda Bot
 
       # schedule / Publish GitHub Packages Registry
       gpr-npm-version_gistID: ${{ vars.GPR_NPM_VERSION_GISTID }}
@@ -28,4 +32,5 @@ jobs:
 
       # schedule
       GIST_SECRET: ${{ secrets.GIST_SECRET }}
+      npm_token: ${{ secrets.npm_token }}
       SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
