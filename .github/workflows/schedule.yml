@@ -9,16 +9,14 @@ jobs:
     uses: mafalda-sfu/workflows/.github/workflows/schedule.yml@v1
 
     with:
-      reference-package-name: "@mafalda-sfu/mediasoup-node-tests"
-
-      # Update
       dependencies-update-latest: "@mafalda-sfu/* mediasoup"
-
-      # Docs
       destination-repository-name: Mafalda-SFU.github.io
-      docs-coverage_gistID: ${{ vars.DOCS_COVERAGE_GISTID }}
+      reference-package-name: "@mafalda-sfu/mediasoup-node-tests"
       user-email: bot@mafalda.io
       user-name: Mafalda Bot
+
+      # Docs
+      docs-coverage_gistID: ${{ vars.DOCS_COVERAGE_GISTID }}
 
       # Publish GitHub Packages Registry
       gpr-npm-version_gistID: ${{ vars.GPR_NPM_VERSION_GISTID }}

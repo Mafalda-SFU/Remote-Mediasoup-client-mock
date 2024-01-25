@@ -9,28 +9,23 @@ jobs:
     uses: mafalda-sfu/workflows/.github/workflows/main+schedule.yml@v1
 
     with:
+      dependencies-update-latest: "@mafalda-sfu/* mediasoup"
+      destination-repository-name: Mafalda-SFU.github.io
       reference-package-name: "@mafalda-sfu/mediasoup-node-tests"
+      user-email: bot@mafalda.io
+      user-name: Mafalda Bot
 
       # main
       code-coverage_gistID: ${{ vars.CODE_COVERAGE_GISTID }}
 
-      # schedule / Update
-      dependencies-update-latest: "@mafalda-sfu/* mediasoup"
-
       # schedule / Docs
-      destination-repository-name: Mafalda-SFU.github.io
       docs-coverage_gistID: ${{ vars.DOCS_COVERAGE_GISTID }}
-      user-email: bot@mafalda.io
-      user-name: Mafalda Bot
 
       # schedule / Publish GitHub Packages Registry
       gpr-npm-version_gistID: ${{ vars.GPR_NPM_VERSION_GISTID }}
 
     secrets:
-      # common
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # schedule
       GIST_SECRET: ${{ secrets.GIST_SECRET }}
       npm_token: ${{ secrets.npm_token }}
       SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
