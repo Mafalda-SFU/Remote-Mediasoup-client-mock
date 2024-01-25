@@ -1,31 +1,25 @@
-name: main
+name: schedule
 
 on:
-  push:
-    branches: [ main ]
+  schedule:
+    - cron: "30 1/4 * * *"
 
 jobs:
-  main_and_schedule:
-    uses: mafalda-sfu/workflows/.github/workflows/main+schedule.yml@v1
+  check_and_update:
+    uses: mafalda-sfu/workflows/.github/workflows/schedule.yml@v1
 
     with:
       reference-package-name: "@mafalda-sfu/mediasoup-node-tests"
 
-      # main
-      code-coverage_gistID: ${{ vars.CODE_COVERAGE_GISTID }}
-
-      # schedule / Docs
+      # Docs
       destination-repository-name: Mafalda-SFU.github.io
       docs-coverage_gistID: ${{ vars.DOCS_COVERAGE_GISTID }}
       user-email: bot@mafalda.io
 
-      # schedule / Publish GitHub Packages Registry
+      # Publish GitHub Packages Registry
       gpr-npm-version_gistID: ${{ vars.GPR_NPM_VERSION_GISTID }}
 
     secrets:
-      # common
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # schedule
       GIST_SECRET: ${{ secrets.GIST_SECRET }}
+      npm_token: ${{ secrets.npm_token }}
       SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
