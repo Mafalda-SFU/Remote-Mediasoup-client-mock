@@ -9,6 +9,7 @@ jobs:
     uses: mafalda-sfu/workflows/.github/workflows/main+schedule.yml@v1
 
     with:
+      destination-github-username: Mafalda-SFU
       dependencies-update-latest: "@mafalda-sfu/* mediasoup"
       destination-repository-name: Mafalda-SFU.github.io
       reference-package-name: "@mafalda-sfu/mediasoup-node-tests"
