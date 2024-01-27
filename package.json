@@ -13,7 +13,7 @@
     "docs:coverage": "doc-coverage .",
     "lint": "eslint .",
     "predocs": "mkdir -p docs/",
-    "prepare": "husky install",
+    "prepare": "husky",
     "pretest": "npm run lint",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
@@ -46,7 +46,7 @@
     "@mafalda-sfu/eslint-config-jest": "^0.0.1",
     "@mafalda-sfu/mediasoup-node-tests": "^3.13.16",
     "eslint": "^8.56.0",
-    "husky": "^8.0.3",
+    "husky": "^9.0.6",
     "jest": "^29.7.0",
     "jsdoc-to-markdown": "^8.0.0"
   }
