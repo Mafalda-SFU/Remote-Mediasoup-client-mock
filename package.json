@@ -1,6 +1,6 @@
 {
   "name": "@mafalda-sfu/remote-mediasoup-client-mock",
-  "version": "3.15.4",
+  "version": "3.15.5",
   "description": "Mock of `Remote Mediasoup client`",
   "type": "module",
   "main": "index.js",
@@ -38,13 +38,13 @@
   "homepage": "https://mafalda.io/Remote-Mediasoup-client-mock",
   "dependencies": {
     "@mafalda-sfu/mediasoup-getstats-factory": "^1.0.0",
-    "mediasoup": "^3.15.4"
+    "mediasoup": "^3.15.5"
   },
   "devDependencies": {
     "@mafalda-sfu/doc-coverage": "github:Mafalda-SFU/doc-coverage",
     "@mafalda-sfu/eslint-config": "^0.7.0",
     "@mafalda-sfu/eslint-config-jest": "^0.0.1",
-    "@mafalda-sfu/mediasoup-node-tests": "^3.15.4",
+    "@mafalda-sfu/mediasoup-node-tests": "^3.15.5",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
