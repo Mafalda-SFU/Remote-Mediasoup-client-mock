@@ -37,7 +37,7 @@
   },
   "homepage": "https://mafalda.io/Remote-Mediasoup-client-mock",
   "dependencies": {
-    "@mafalda-sfu/mediasoup-getstats-factory": "^1.0.0",
+    "@mafalda-sfu/mediasoup-getstats-factory": "^1.0.1",
     "mediasoup": "^3.15.5"
   },
   "devDependencies": {
