@@ -1,5 +1,8 @@
+.husky/
 .github/
+doc-coverage/
 *.tgz
 coverage*
 .eslintrc
+jest.config.json
 test.js
