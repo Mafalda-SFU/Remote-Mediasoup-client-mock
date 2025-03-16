@@ -65,30 +65,43 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    * [Remote Mediasoup server](https://mafalda.io/Remote-Mediasoup-server/). If
    * it's not provided, the {@link RemoteMediasoupClientMock} object will remain
    * in closed state.
-   * @param {object} [WebSocket] WebSocket class to be used to create the
-   * connections with the
-   * [Remote Mediasoup server](https://mafalda.io/Remote-Mediasoup-server/)
+   * @param {object} [options] Options for the connection
    *
    * @date 30/04/2023
    *
    * @author Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>
    */
-  constructor(url, WebSocket)
+  constructor(url, options)
   {
-    if(url && typeof url !== 'string') ({WebSocket, url} = url)
+    if(url && typeof url !== 'string') ({url} = url)
 
     // eslint-disable-next-line no-console
-    if(WebSocket) console.debug('Websocket class not used in mock')
+    if(options) console.debug('options not used in mock')
 
     super()
 
     if(url) this.open(url)
   }
 
+  destroy()
+  {
+    ok(!this.destroyed, `${this.constructor.name} is already destroyed`)
+
+    this.close()
+
+    this.#destroyed = true
+  }
+
 
   //
-  // Remote Mediasoup common interface
+  // Public API
   //
+
+  get destroyed()
+  {
+    return this.#destroyed
+  }
+
 
   /**
    * This object is API compatible with the
@@ -109,6 +122,8 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   get mediasoup()
   {
+    ok(!this.#destroyed, `${this.constructor.name} is destroyed`)
+
     return this.#connected ? mediasoup : undefined
   }
 
@@ -137,18 +152,22 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   get readyState()
   {
+    ok(!this.#destroyed, `${this.constructor.name} is destroyed`)
+
     if(this.#connected) return CONNECTED
 
     return this.#closed ? CLOSED : OPEN
   }
 
 
-  getStats = async () =>
-  {
-    ok(this.#mediasoupGetStats, 'Remote Mediasoup client is not connected')
-
-    return this.#mediasoupGetStats.getStats()
-  }
+  /**
+   * @summary Get the stats of the client.
+   *
+   * @returns {Promise<object>}
+   */
+  getStats = async () => this.mediasoup
+    ? this.#mediasoupGetStats.getStats()
+    : undefined
 
 
   //
@@ -168,6 +187,8 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   close()
   {
+    ok(!this.#destroyed, `${this.constructor.name} is destroyed`)
+
     if(this.#closed) return
 
     this.#closed = true
@@ -203,6 +224,8 @@ export default class RemoteMediasoupClientMock extends EventEmitter
    */
   open(url)
   {
+    ok(!this.#destroyed, `${this.constructor.name} is destroyed`)
+
     ok(this.#closed, `${this.constructor.name} is already open(ing)`)
 
     // If `url` argument is not provided, allow to reopen the client to the same
@@ -228,6 +251,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
 
   #closed = true
   #connected = false
+  #destroyed = false
   #mediasoupGetStats
   #url
 
@@ -240,6 +264,5 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   }
 
   #onOpen = this.emit.bind(this, 'open')
-
   #onWebsocketOpen = this.emit.bind(this, 'websocketOpen')
 }
