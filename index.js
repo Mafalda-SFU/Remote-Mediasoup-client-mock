@@ -124,7 +124,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   {
     ok(!this.#destroyed, `${this.constructor.name} is destroyed`)
 
-    return this.#connected ? mediasoup : undefined
+    return this.#mediasoup
   }
 
   /**
@@ -154,7 +154,7 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   {
     ok(!this.#destroyed, `${this.constructor.name} is destroyed`)
 
-    if(this.#connected) return CONNECTED
+    if(this.#mediasoup) return CONNECTED
 
     return this.#closed ? CLOSED : OPEN
   }
@@ -192,16 +192,18 @@ export default class RemoteMediasoupClientMock extends EventEmitter
     if(this.#closed) return
 
     this.#closed = true
-    this.#connected = false
+
+    this.#mediasoup = undefined
+    this.emit('mediasoup')
+
+    // We don't emit the 'disconnected' and `websocketClose` events because it's
+    // us who are closing the client, not the server
 
     this.#mediasoupGetStats.close()
     this.#mediasoupGetStats = undefined
 
     // Notify client is closed
     this.emit('close')
-
-    // We don't emit the 'disconnected' and `websocketClose` events because it's
-    // us who are closing the client, not the server
   }
 
   /**
@@ -250,15 +252,17 @@ export default class RemoteMediasoupClientMock extends EventEmitter
   //
 
   #closed = true
-  #connected = false
   #destroyed = false
+  #mediasoup
   #mediasoupGetStats
   #url
 
 
   #onConnected = () =>
   {
-    this.#connected = true
+    this.#mediasoup = mediasoup
+    this.emit('mediasoup', mediasoup)
+
     this.#mediasoupGetStats = mediasoupGetStatsFactory(mediasoup)
     this.emit('connected')
   }
